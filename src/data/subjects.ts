@@ -1,36 +1,101 @@
+// subjects.ts
+
 import { Group, Subject } from "../types";
 
+
+
 export const subjectsList = [
-  "Математика",
-  "Фізика",
-  "Програмування",
-  "Хімія",
-  "Біологія",
+  "Теорія прийняття рішень",
+  "Статистичне моделювання",
+  "Інтелектуальні системи",
+  "Інформаційні технології",
+  "Розробка ПЗ під мобільні",
 ];
 
 export const assignSubjectsToGroups = (groups: Group[]): Group[] => {
   return groups.map((group) => {
-    // Випадково визначаємо кількість предметів для групи
-    const numSubjects = getRandomInt(3, subjectsList.length);
-    const groupSubjects = shuffleArray(subjectsList).slice(0, numSubjects);
+    let groupSubjects: Subject[] = [];
+
+    switch (group.id) {
+      case "TTP-41":
+      case "TTP-42":
+        groupSubjects = [
+          {
+            name: "Теорія прийняття рішень",
+            lectures: 30,
+            practices: 15,
+            requiresSubdivision: true,
+          },
+          {
+            name: "Статистичне моделювання",
+            lectures: 30,
+            practices: 15,
+            requiresSubdivision: true,
+          },
+          {
+            name: "Інформаційні технології",
+            lectures: 15,
+            practices: 15,
+            requiresSubdivision: false,
+          },
+        ];
+        break;
+      case "MI-41":
+      case "MI-42":
+        groupSubjects = [
+          {
+            name: "Статистичне моделювання",
+            lectures: 30,
+            practices: 15,
+            requiresSubdivision: true,
+          },
+          {
+            name: "Інтелектуальні системи",
+            lectures: 30,
+            practices: 15,
+            requiresSubdivision: true,
+          },
+          {
+            name: "Інформаційні технології",
+            lectures: 15,
+            practices: 15,
+            requiresSubdivision: true,
+          },
+          {
+            name: "Розробка ПЗ під мобільні",
+            lectures: 15,
+            practices: 15,
+            requiresSubdivision: true,
+          },
+        ];
+        break;
+      case "TK-41":
+        groupSubjects = [
+          {
+            name: "Статистичне моделювання",
+            lectures: 30,
+            practices: 15,
+            requiresSubdivision: true,
+          },
+          {
+            name: "Інтелектуальні системи",
+            lectures: 30,
+            practices: 15,
+            requiresSubdivision: true,
+          },
+          {
+            name: "Теорія прийняття рішень",
+            lectures: 15,
+            practices: 15,
+            requiresSubdivision: true,
+          },
+        ];
+        break;
+    }
 
     return {
       ...group,
-      subjects: groupSubjects.map((subject): Subject => ({
-        name: subject,
-        lectures: getRandomInt(14, 28), // Випадкова кількість годин лекцій
-        practices: getRandomInt(14, 28), // Випадкова кількість годин практичних
-        requiresSubdivision: group.students > 25, // Поділ на підгрупи, якщо студентів більше 25
-      })),
+      subjects: groupSubjects,
     };
   });
 };
-
-// Допоміжні функції
-function shuffleArray<T>(array: T[]): T[] {
-  return array.sort(() => Math.random() - 0.5);
-}
-
-function getRandomInt(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}

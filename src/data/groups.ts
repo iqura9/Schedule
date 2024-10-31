@@ -1,25 +1,37 @@
 import { Group } from "../types";
 
-export const generateGroups = (
-  numGroups: number,
-  minStudents: number,
-  maxStudents: number
-): Group[] => {
-  return Array.from({ length: numGroups }, (_, i) => {
-    const students = getRandomInt(minStudents, maxStudents);
-    const subgroupSize = Math.floor(students / 2);
 
-    return {
-      id: `G${i + 1}`,
-      name: `Група ${i + 1}`,
-      students,
-      subgroups: [subgroupSize, students - subgroupSize],
+export const generateGroups = (): Group[] => {
+  return [
+    {
+      id: "TTP-41",
+      students: 30,
+      subgroups: [10, 20],
       subjects: [],
-    };
-  });
+    },
+    {
+      id: "TTP-42",
+      students: 28,
+      subgroups: [14, 14],
+      subjects: [],
+    },
+    {
+      id: "MI-41",
+      students: 30,
+      subgroups: [15, 15],
+      subjects: [],
+    },
+    {
+      id: "MI-42",
+      students: 29,
+      subgroups: [15, 14],
+      subjects: [],
+    },
+    {
+      id: "TK-41",
+      students: 25,
+      subgroups: [13, 12],
+      subjects: [],
+    },
+  ];
 };
-
-// Допоміжна функція
-function getRandomInt(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}

@@ -1,23 +1,14 @@
 import { Classroom } from "../types";
 
-export const generateClassrooms = (
-  numClassrooms: number,
-  minCapacity: number,
-  maxCapacity: number
-): Classroom[] => {
-  return Array.from({ length: numClassrooms }, (_, i) => ({
-    id: `A${i + 1}`,
-    capacity: getRandomInt(minCapacity, maxCapacity),
-    type: getRandomClassroomType(), // "лекційна", "лабораторія", "семінарська"
-  }));
+export const generateClassrooms = (): Classroom[] => {
+  return [
+    { id: "203", capacity: 30 },
+    { id: "204", capacity: 30 },
+    { id: "205", capacity: 30 },
+    { id: "206", capacity: 30 },
+    { id: "207", capacity: 30 },
+    { id: "39", capacity: 60 },
+    { id: "41", capacity: 60 },
+    { id: "43", capacity: 60 },
+  ];
 };
-
-// Допоміжні функції
-function getRandomInt(min: number, max: number): number {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function getRandomClassroomType(): string {
-  const types = ["лекційна", "лабораторія", "семінарська"];
-  return types[Math.floor(Math.random() * types.length)];
-}
