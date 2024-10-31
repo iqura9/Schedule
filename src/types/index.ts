@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 // types/index.ts
 export interface Subject {
     name: string;
@@ -18,6 +20,7 @@ export interface Subject {
   }
   
   export interface Classroom {
+    [x: string]: ReactNode;
     id: string;
     capacity: number;
   }

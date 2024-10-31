@@ -14,6 +14,7 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ schedule }) => {
           <th className="px-4 py-2">Предмет</th>
           <th className="px-4 py-2">Лектор</th>
           <th className="px-4 py-2">Аудиторія</th>
+          <th className="px-4 py-2">Тип</th>
           <th className="px-4 py-2">Час</th>
         </tr>
       </thead>
@@ -24,6 +25,7 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({ schedule }) => {
             <td className="border px-4 py-2">{entry.subject.name}</td>
             <td className="border px-4 py-2">{entry.lecturer.name}</td>
             <td className="border px-4 py-2">{entry.classroom.id}</td>
+            <td className="border px-4 py-2">{entry.classroom.type}</td>
             <td className="border px-4 py-2">{entry.timeSlot}</td>
           </tr>
         ))}

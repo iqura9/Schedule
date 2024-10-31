@@ -8,9 +8,10 @@ import { assignSubjectsToGroups } from "./data/subjects";
 import { generateSchedule } from "./schedulingAlgorithm";
 import { Classroom, Group, Lecturer, ScheduleEntry } from "./types";
 
+
 const App: React.FC = () => {
   const [schedule, setSchedule] = useState<ScheduleEntry[]>([]);
-
+  console.log(schedule)
   const generate = (
     numGroups: number,
     minStudents: number,
