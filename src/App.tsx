@@ -3,8 +3,8 @@ import { generateClassrooms } from './data/classrooms';
 import { generateGroups } from './data/groups';
 import { generateLecturers } from './data/lecturers';
 import { assignSubjectsToGroups } from './data/subjects';
-import { Classroom, Group, Lecturer, Lesson } from './types';
 import { generateScheduleGA } from './schedulingAlgorithm';
+import { Classroom, Group, Lecturer, Lesson } from './types';
 
 function App() {
   const groups: Group[] = useMemo(() => assignSubjectsToGroups(generateGroups()), []);
@@ -26,7 +26,7 @@ function App() {
   });
 
   const [selectedGroup, setSelectedGroup] = useState(groups[0].id);
-  console.log('schedule',schedule)
+
   useEffect(() => {
     setSchedule(globalSchedule.filter(el => {
       return el.groups.includes(selectedGroup)
