@@ -3,15 +3,15 @@ import { generateClassrooms } from './data/classrooms';
 import { generateGroups } from './data/groups';
 import { generateLecturers } from './data/lecturers';
 import { assignSubjectsToGroups } from './data/subjects';
-import { generateSchedule } from './schedulingAlgorithm';
 import { Classroom, Group, Lecturer, Lesson } from './types';
+import { generateScheduleGA } from './schedulingAlgorithm';
 
 function App() {
   const groups: Group[] = useMemo(() => assignSubjectsToGroups(generateGroups()), []);
   const lecturers: Lecturer[] = useMemo(() => generateLecturers(),[]);
   const classrooms: Classroom[] = useMemo(() => generateClassrooms(),[]);
 
-  const globalSchedule = useMemo(() => generateSchedule(groups, lecturers, classrooms), [groups,lecturers,classrooms])
+  const globalSchedule = useMemo(() => generateScheduleGA(groups, lecturers, classrooms), [groups,lecturers,classrooms])
 
   const [schedule,setSchedule] = useState<Lesson[]>(globalSchedule)
 
