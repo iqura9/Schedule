@@ -26,11 +26,9 @@ function App() {
   });
 
   const [selectedGroup, setSelectedGroup] = useState(groups[0].id);
-
+  console.log('schedule',schedule)
   useEffect(() => {
     setSchedule(globalSchedule.filter(el => {
-      console.log('selectedGroup',selectedGroup)
-      console.log('el.groups',el.groups)
       return el.groups.includes(selectedGroup)
     }))
   },[selectedGroup,globalSchedule])

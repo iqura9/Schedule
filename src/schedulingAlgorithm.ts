@@ -9,12 +9,11 @@ export const generateSchedule = (
 
   const days = ["Понеділок", "Вівторок", "Середа", "Четвер", "Пʼятниця"];
   const lessonsPerDay = 3;
-  const timeslots: string[] = [];
+  const timeslotsPerGroup: string[] = [];
 
-  // Create timeslots for each day and lesson number
   days.forEach((day) => {
     for (let lesson = 1; lesson <= lessonsPerDay; lesson++) {
-      timeslots.push(`${day}, пара номер ${lesson}`);
+      timeslotsPerGroup.push(`${day}, пара номер ${lesson}`);
     }
   });
 
@@ -56,12 +55,14 @@ export const generateSchedule = (
       }
     });
 
-    // Assign sessions to timeslots
-    let sessionIndex = 0;
-    timeslots.forEach((timeslot) => {
-      if (sessionIndex >= sessions.length) return;
-      const lesson = sessions[sessionIndex];
+    // Assign sessions to timeslots per group
+    let timeslotIndex = 0;
+    console.log('sessions',sessions)
+    sessions.forEach((lesson) => {
+      // Assign timeslot (cycle through timeslots if necessary)
+      const timeslot = timeslotsPerGroup[timeslotIndex % timeslotsPerGroup.length];
       lesson.timeslot = timeslot;
+      timeslotIndex++;
 
       // Assign a lecturer who can teach the subject
       const possibleLecturers = lecturers.filter((lecturer) =>
@@ -86,7 +87,6 @@ export const generateSchedule = (
 
       // Add the lesson to the schedule
       schedule.push(lesson);
-      sessionIndex++;
     });
   });
 
