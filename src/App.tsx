@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { generateClassrooms } from './data/classrooms';
 import { generateGroups } from './data/groups';
 import { generateLecturers } from './data/lecturers';
@@ -7,11 +7,13 @@ import { generateSchedule } from './schedulingAlgorithm';
 import { Classroom, Group, Lecturer, Lesson } from './types';
 
 function App() {
-  const groups: Group[] = assignSubjectsToGroups(generateGroups());
-  const lecturers: Lecturer[] = generateLecturers();
-  const classrooms: Classroom[] = generateClassrooms();
+  const groups: Group[] = useMemo(() => assignSubjectsToGroups(generateGroups()), []);
+  const lecturers: Lecturer[] = useMemo(() => generateLecturers(),[]);
+  const classrooms: Classroom[] = useMemo(() => generateClassrooms(),[]);
 
-  const schedule: Lesson[] = generateSchedule(groups, lecturers, classrooms);
+  const globalSchedule = useMemo(() => generateSchedule(groups, lecturers, classrooms), [groups,lecturers,classrooms])
+
+  const [schedule,setSchedule] = useState<Lesson[]>(globalSchedule)
 
   // Підрахунок годин лекторів
   const lecturerHours = {};
@@ -23,9 +25,44 @@ function App() {
     }
   });
 
+  const [selectedGroup, setSelectedGroup] = useState(groups[0].id);
+
+  useEffect(() => {
+    setSchedule(globalSchedule.filter(el => {
+      console.log('selectedGroup',selectedGroup)
+      console.log('el.groups',el.groups)
+      return el.groups.includes(selectedGroup)
+    }))
+  },[selectedGroup,globalSchedule])
+
+  // Handle the change event
+  const handleChange = (event) => {
+    setSelectedGroup(event.target.value);
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Розклад занять</h1>
+      <form className="max-w-sm mx-auto">
+      <select
+        id="countries"
+        value={selectedGroup}
+        onChange={handleChange}
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
+        <option value="" disabled>
+          Група
+        </option>
+        {groups.map((group) => (
+          <option key={group.id} value={group.id}>
+            {group.id}
+          </option>
+        ))}
+      </select>
+      <p className="mt-2 text-sm">
+        Selected Group: {selectedGroup || "None"}
+      </p>
+    </form>
       <table className="min-w-full bg-white border">
         <thead>
           <tr className="bg-gray-200">
